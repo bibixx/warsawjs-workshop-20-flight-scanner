@@ -41,6 +41,7 @@ class FlightsView extends React.Component {
     this.setState({
       flightsFetching: true,
     });
+
     const url = "https://warsawjs-flights-api.herokuapp.com/flights";
     const {
       to, from, depart, return: returnDate,

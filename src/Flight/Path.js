@@ -1,6 +1,66 @@
 import React from "react";
+import { withStyles } from "@material-ui/core/styles";
 
-import styles from "./Path.css";
+const styles = {
+  path: {
+    marginBottom: 8,
+    display: "grid",
+    gridTemplateColumns: "1fr 5fr 1fr",
+
+    "&:last-child": {
+      marginBottom: 0,
+    },
+  },
+
+  destination: {
+    "&:nth-child(3)": {
+      textAlign: "right",
+    },
+  },
+
+  line: {
+    display: "flex",
+    position: "relative",
+    alignItems: "center",
+    justifyContent: "space-around",
+    width: "100%",
+    flex: 1,
+    padding: [[0, 16]],
+    boxSizing: "border-box",
+
+    "&:after": {
+      content: "\"\"",
+      position: "absolute",
+      left: 16,
+      right: 16,
+      display: "block",
+      height: 3,
+      background: "#3D5AFE",
+      borderRadius: 2,
+    },
+  },
+
+  transfer: {
+    width: 4,
+    height: 4,
+    background: "#fff",
+    border: "3px solid #3D5AFE",
+    borderRadius: "50%",
+    zIndex: 1,
+    boxSizing: "content-box",
+  },
+
+  time: {
+    fontSize: 24,
+    margin: 0,
+  },
+
+  airport: {
+    fontSize: 16,
+    color: "#999",
+    margin: 0,
+  },
+};
 
 const formatTime = (time) => {
   const hour = Math.floor(+time);
@@ -12,26 +72,26 @@ const formatTime = (time) => {
   return `${hourString}:${minutesString}`;
 };
 
-const Path = ({ path, id }) => (
-  <div className={styles.path}>
-    <div className={styles.destination}>
-      <p className={styles.time}>{formatTime(path[0].startHour)}</p>
-      <p className={styles.airport}>{path[0].airportFrom}</p>
+const Path = ({ path, id, classes }) => (
+  <div className={classes.path}>
+    <div className={classes.destination}>
+      <p className={classes.time}>{formatTime(path[0].startHour)}</p>
+      <p className={classes.airport}>{path[0].airportFrom}</p>
     </div>
 
-    <div className={styles.line}>
+    <div className={classes.line}>
       {new Array(path.length - 1).fill({}).map((v, i) =>
-        (<div key={`${id}-${v.airportFrom}-${i}`} className={styles.transfer} />),
+        (<div key={`${id}-${v.airportFrom}-${i}`} className={classes.transfer} />),
       )}
     </div>
 
-    <div className={styles.destination}>
-      <p className={styles.time}>
+    <div className={classes.destination}>
+      <p className={classes.time}>
         {formatTime(path[path.length - 1].startHour + path[path.length - 1].length)}
       </p>
-      <p className={styles.airport}>{path[path.length - 1].airportTo}</p>
+      <p className={classes.airport}>{path[path.length - 1].airportTo}</p>
     </div>
   </div>
 );
 
-export default Path;
+export default withStyles(styles)(Path);
