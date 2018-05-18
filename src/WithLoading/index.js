@@ -1,9 +1,10 @@
 import React from "react";
 
-import LinearProgress from "@material-ui/core/LinearProgress";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-const withLoading = Component => ({ isLoading }) => (
-  isLoading ? <LinearProgress /> : Component
+const withLoading = children => ({ isLoading }) => (
+  isLoading ? <CircularProgress size={100} /> : children
 );
+
 
 export default withLoading;

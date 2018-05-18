@@ -22,7 +22,7 @@ export default class App extends React.Component {
 4. Dodać bazowe cssy (`import "./index.css"`)
 
 ### 2. Widok wyszukiwania
-1. Stworzyć komponent `<SearchView />` w pliku `SearchView.js`
+1. Stworzyć komponent `<SearchView />`
 2. Dodać w nim znacznik `form`
 3. Dodać dwa znaczniki `select`:  [Do, Z] z opcjami `WAW, ATL`
 4. Dodać dwa znaczniki `input[type="date"]` Data wylotu, Data powrotu
@@ -41,9 +41,9 @@ class SearchView extends React.Component {
 ```javascript
 <input onChange={this.onToChange} value={this.state.to} />
 ```
-7. Dodać `onSubmit` do `form` (zwykły `console.log` state'a)
- 	7.1 Dodać prostą walidację pół (czy są wszystkie wypełnione)
-	7.2. Ważne, aby pamiętać o zablokowaniu domyślnego zachowania formularza – `evt.preventDefault()`
+7. Dodać `onSubmit` do `form` (zwykły `console.log` state'a)<br />
+ 	7.1 Dodać walidację pól (czy są wypełnione, czy data początkowa jest wcześniej niż data końcowa)<br />
+	7.2 Ważne, aby pamiętać o zablokowaniu domyślnego zachowania formularza – `evt.preventDefault()`
 
 ### 3. Widok wyników
 1. Stworzyć kolejny component `<FlightsView />`
@@ -58,35 +58,25 @@ render() {
 ```
 6. Stworzyć komponent `<Flight />`, który będzie wyświetlał: godzinę odlotu, godzinę przylotu, cenę lotu, lotnisko startowe, lotnisko końcowe, ilość przesiadek
 
-### 4. CSS
-1. `npm run eject`
-2. https://medium.com/nulogy/how-to-use-css-modules-with-create-react-app-9e44bec2b5c2#2f06
-3. Zaimportowanie styli (`import styles from "./Flights.css"`)
-4. Ostylowanie przy użyciu css (przykład: `https://github.com/...`), rozbijanie na mniejsze komponenty
+### 4. Stylowanie (JSS + Material-UI)
+1. Dodajemy Material-UI – `npm install @material-ui/core @material-ui/icons --save`
+2. W pliku `public/index.html` dodajemy `<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">`,
+3. Dodajemy `AppBar` oraz `Drawer` – https://material-ui-next.com/demos/drawers/#clipped-under-the-app-bar
+4. Zamieniamy `inputy` na te z Material-UI – https://material-ui-next.com/demos/text-fields/
+5. Zamieniamy `button` na ten z Material-UI – https://material-ui-next.com/demos/buttons/
 
-### 5. Dodanie filtrowania
+### 5. Dodanie loadera – Higher-Order Components (HOC)
+1. Tworzymy plik `withLoading.js`
+2. Tworzymy funkcję `withLoading`, która wyświetla nam `LinearProgress` jeśli prop `isLoading === true`, w innym przypadku wyświetlamy `Component`
+
+### 6. Dodanie filtrowania
 1. Stworzyć komponent `<FlightsFilter />`
-2. Dodać 2 `input[type="number]` – jeden dla minimalnej ceny, drugi dla maksymalnej
-3. Stworzyć `refy`
-```javascript
-export default class FlightsFilter extends React.Component {
-	constructor() {
-		super();
-		this.priceMin = React.createRef();
-
-		//...
-	}
-	// ...
-	
-	render() {
-		return (<input type="number" ref={this.priceMin} />);
-	}
-}
-```
+2. Dodać 2 `Input[type="number]` – jeden dla minimalnej ceny, drugi dla maksymalnej
+3. Tworzymy metodę `updateStateField`, która będzie zmieniać nasz stan
 4. Filtrowanie lotów – podanie jako prop metody `filterFlights` do `<FlightsFilter />`, która przy wykonaniu filtruje loty i przypisuje je do state'u `<FlightsView />`
-5. Stworzyć metodę, która będzie tworzyła filtr ceny
+5. Stworzyć filtrowanie po cenie
 6. Dodać wywołanie tej metody na `onChange` inputa
-7. Dodać `input[type="checkbox]` i stworzyć dla niego `ref`
+7. Dodać `Switch`
 8. Dodać filtrowanie tylko jeśli checkbox jest zaznaczony
 
 ## Dla chętnych

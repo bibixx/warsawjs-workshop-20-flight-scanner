@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 
 export const SerachSectionInput = ({
-  onChange, value, label, type = "text",
+  onChange, value, label, type = "text", ...rest
 }) => (
   <div className="control column">
     <TextField
@@ -16,12 +16,13 @@ export const SerachSectionInput = ({
         shrink: true,
       }}
       margin="normal"
+      {...rest}
     />
   </div>
 );
 
 export const SerachSectionSelect = ({
-  onChange, value, label, options = [],
+  onChange, value, label, options = [], ...rest
 }) => (
   <div className="control column">
     <div>
@@ -36,6 +37,7 @@ export const SerachSectionSelect = ({
           shrink: true,
         }}
         margin="normal"
+        {...rest}
       >
         { options.map((opt, i) => (
           <MenuItem key={`${label}-${i}`} value={opt.code}>

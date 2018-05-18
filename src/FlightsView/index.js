@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -26,6 +26,11 @@ const styles = theme => ({
     height: "100vh",
     overflow: "auto",
     boxSizing: "border-box",
+  },
+  contentIsLoading: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   toolbar: theme.mixins.toolbar,
 });
@@ -56,11 +61,9 @@ class FlightsView extends React.Component {
     });
   }
 
-  filterFlights = (filters = []) => {
-    console.log(filters);
-
+  filterFlights = (filterFunc) => {
     this.setState({
-      filteredFlights: filters.reduce((prev, curr) => curr(prev), this.state.flights),
+      filteredFlights: this.state.flights.filter(filterFunc),
     });
   }
 
@@ -70,7 +73,7 @@ class FlightsView extends React.Component {
 
     const { classes } = this.props;
 
-    const Flights = withLoading((<Fragment>{flights}</Fragment>));
+    const Flights = withLoading(flights);
 
     return (
       <div className={classes.root}>
@@ -82,8 +85,9 @@ class FlightsView extends React.Component {
 
         <FlightsFilter filterFlights={this.filterFlights} />
 
-        <main className={classes.content}>
+        <main className={`${classes.content} ${this.state.flightsFetching ? classes.contentIsLoading : ""}`}>
           <div className={classes.toolbar} />
+
           <Flights isLoading={this.state.flightsFetching} />
         </main>
       </div>

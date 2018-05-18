@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 
-import Path from "./Path";
+import Path from "./Path/";
 
 // import styles from "./Flight.css";
 

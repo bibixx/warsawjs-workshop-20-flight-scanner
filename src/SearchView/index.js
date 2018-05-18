@@ -16,6 +16,14 @@ const styles = theme => ({
     position: "relative",
     display: "flex",
   },
+  content: {
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing.unit * 3,
+    paddingTop: theme.spacing.unit * 5,
+    height: "100vh",
+    boxSizing: "border-box",
+
+  },
   toolbar: theme.mixins.toolbar,
   search: {
     margin: "0 auto",
@@ -32,6 +40,7 @@ class SearchView extends React.Component {
       from: "",
       depart: "",
       return: "",
+      errors: {},
       ...searchData,
     };
   }
@@ -62,8 +71,32 @@ class SearchView extends React.Component {
 
   onSubmit = (e) => {
     e.preventDefault();
+    const errors = {};
 
-    if (!(this.state.to && this.state.from && this.state.depart && this.state.return)) {
+    if (this.state.to === "") {
+      errors.to = true;
+    }
+
+    if (this.state.from === "") {
+      errors.from = true;
+    }
+
+    if (this.state.depart === "") {
+      errors.depart = true;
+    }
+
+    if (this.state.return === "") {
+      errors.return = true;
+    }
+
+    if (new Date(this.state.return) - new Date(this.state.depart) < 0) {
+      errors.return = true;
+    }
+
+    if (Object.keys(errors).length > 0) {
+      this.setState({
+        errors,
+      });
       return;
     }
 
@@ -80,7 +113,7 @@ class SearchView extends React.Component {
     const { classes } = this.props;
 
     return (
-      <div>
+      <div className={classes.content}>
         <TopBar />
         <div className={classes.toolbar} />
         <form onSubmit={this.onSubmit} className={classes.search}>
@@ -88,16 +121,40 @@ class SearchView extends React.Component {
 
           <Grid container spacing={24}>
             <Grid item xs={12} sm={3}>
-              <SerachSectionSelect label="From" options={options} value={this.state.from} onChange={this.onFromChange} />
+              <SerachSectionSelect
+                label="From"
+                error={this.state.errors.from}
+                options={options}
+                value={this.state.from}
+                onChange={this.onFromChange}
+              />
             </Grid>
             <Grid item xs={12} sm={3}>
-              <SerachSectionSelect label="To" options={options} value={this.state.to} onChange={this.onToChange} />
+              <SerachSectionSelect
+                label="To"
+                error={this.state.errors.to}
+                options={options}
+                value={this.state.to}
+                onChange={this.onToChange}
+              />
             </Grid>
             <Grid item xs={12} sm={3}>
-              <SerachSectionInput label="Depart" type="date" value={this.state.depart} onChange={this.onDepartChange} />
+              <SerachSectionInput
+                label="Depart"
+                error={this.state.errors.depart}
+                type="date"
+                value={this.state.depart}
+                onChange={this.onDepartChange}
+              />
             </Grid>
             <Grid item xs={12} sm={3}>
-              <SerachSectionInput label="Return" type="date" value={this.state.return} onChange={this.onReturnChange} />
+              <SerachSectionInput
+                label="Return"
+                error={this.state.errors.return}
+                type="date"
+                value={this.state.return}
+                onChange={this.onReturnChange}
+              />
             </Grid>
           </Grid>
 

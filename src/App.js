@@ -7,7 +7,7 @@ import FlightsView from "./FlightsView/";
 class App extends React.Component {
   state = {
     airports: [],
-    /*
+    // /*
     searchData: {},
     view: "search",
     /*/
@@ -18,7 +18,6 @@ class App extends React.Component {
       from: "WAW",
       to: "ATL",
     },
-    //*/
     //*/
   }
 

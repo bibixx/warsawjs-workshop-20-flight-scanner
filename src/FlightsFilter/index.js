@@ -50,19 +50,18 @@ class FlightsFilter extends React.Component {
     }
 
     this.setState(newState, () => {
-      this.props.filterFlights(
-        [
-          flights => flights.filter(
-            f => (!this.state.priceToggle) ||
-            (f.price >= this.state.priceMin && f.price <= this.state.priceMax)),
-          flights => flights.filter(
-            f => (!this.state.transfersToggle) ||
-            (
-              f.outboundPath.length <= +this.state.transfersNo + 1 &&
-              f.inboundPath.length <= +this.state.transfersNo + 1
-            )),
-        ],
-      );
+      this.props.filterFlights((flight) => {
+        const isPriceToggled = this.state.priceToggle;
+        const isPriceInRange =
+          flight.price >= this.state.priceMin && flight.price <= this.state.priceMax;
+
+        const areTransfersToggled = this.state.transfersToggle;
+        const areTransfersInRange =
+          flight.outboundPath.length <= +this.state.transfersNo + 1 &&
+          flight.inboundPath.length <= +this.state.transfersNo + 1;
+
+        return (!isPriceToggled || isPriceInRange) && (!areTransfersToggled || areTransfersInRange);
+      });
     });
   }
 
@@ -81,7 +80,7 @@ class FlightsFilter extends React.Component {
             <ListItemText disableTypography primary={(<Typography variant="headline">Price</Typography>)} />
           </ListItem>
           <ListItem>
-            <Grid container spacing="16">
+            <Grid container spacing={16}>
               <Grid item xs={3} className={classes.center}>
                 <Switch
                   color="primary"
@@ -124,7 +123,7 @@ class FlightsFilter extends React.Component {
             <ListItemText disableTypography primary={(<Typography variant="headline">Transfers</Typography>)} />
           </ListItem>
           <ListItem>
-            <Grid container spacing="16">
+            <Grid container spacing={16}>
               <Grid item xs={3} className={classes.center}>
                 <Switch
                   color="primary"
