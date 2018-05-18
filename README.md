@@ -89,3 +89,4 @@ render() {
 
 ## Źródła
 - API: https://warsawjs-flights-api.herokuapp.com/
+- Chowane menu boczne: https://codesandbox.io/s/947n8o192p
