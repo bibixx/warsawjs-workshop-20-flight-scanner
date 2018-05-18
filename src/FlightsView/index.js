@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 
 import { withStyles } from "@material-ui/core/styles";
 
@@ -36,6 +37,17 @@ const styles = theme => ({
 });
 
 class FlightsView extends React.Component {
+  static propTypes = {
+    goToSearch: PropTypes.func.isRequired,
+    classes: PropTypes.object.isRequired,
+    searchData: PropTypes.shape({
+      to: PropTypes.string.isRequired,
+      from: PropTypes.string.isRequired,
+      depart: PropTypes.string.isRequired,
+      return: PropTypes.string.isRequired,
+    }).isRequired,
+  }
+
   state = {
     flights: [],
     flightsFetching: false,
