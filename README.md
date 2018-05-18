@@ -86,6 +86,7 @@ render() {
 - [x] Wyświetlanie (ilości) przesiadek
 - [ ] Sortowanie (po cenie, długości podróży)
 - [x] Ustawianie wartości pól w `<SeachView />` po powrocie do tego widoku
+- [ ] Dodanie chowanego menu bocznego
 
 ## Źródła
 - API: https://warsawjs-flights-api.herokuapp.com/
