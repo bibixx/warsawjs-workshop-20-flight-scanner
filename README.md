@@ -10,11 +10,11 @@
 import React from "react";
 
 export default class App extends React.Component {
-	render() {
-		return (
-			<h1>Hello World!</h1>
-		);
-	}
+  render() {
+    return (
+      <h1>Hello World!</h1>
+    );
+  }
 }
 ```
 
@@ -29,12 +29,14 @@ export default class App extends React.Component {
 5. Podpiąć pod nie metody zmieniające `state` na ich wartości
 ```javascript
 class SearchView extends React.Component {
-	onToChange = (e) => this.setState({ to: e.target.value });
-	render() { return (
-		<div>
-			<input onChange={this.onToChange} />
-		</div>
-	) }
+  onToChange = (e) => this.setState({ to: e.target.value });
+  render() {
+    return (
+      <div>
+        <input onChange={this.onToChange} />
+      </div>
+    )
+  }
 }
 ```
 6. Ustalić wartość `inputów` na wartości ze `state`
@@ -53,7 +55,7 @@ class SearchView extends React.Component {
 5. Wyświetlić dane w prosty sposób np.
 ```javascript
 render() {
-	return this.state.flights.map( flight => (<p>Price: ${flight.price}</p>);
+  return this.state.flights.map( flight => (<p>Price: ${flight.price}</p>);
 }
 ```
 6. Stworzyć komponent `<Flight />`, który będzie wyświetlał: godzinę odlotu, godzinę przylotu, cenę lotu, lotnisko startowe, lotnisko końcowe, ilość przesiadek
